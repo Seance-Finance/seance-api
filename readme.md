@@ -1,4 +1,5 @@
-# Beefy API
+# Seance API
+Forked and inspired by the folks from Beefy Finance. Respect.
 
 API that powers [Beefy Finance](https://app.beefy.finance). You can find the repo for the frontend [here](https://github.com/beefyfinance/beefy-app).
 
