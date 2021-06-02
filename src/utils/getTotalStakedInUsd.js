@@ -1,9 +1,10 @@
 const BigNumber = require('bignumber.js');
-const { bscWeb3: web3, web3Factory } = require('./web3');
+const { web3Factory } = require('./web3');
 
 const ERC20 = require('../abis/ERC20.json');
 const fetchPrice = require('./fetchPrice');
 const { lpTokenPrice } = require('./lpTokens');
+const { FTM_CHAIN_ID } = require('../constants');
 
 const getTotalStakedInUsd = async (
   targetAddr,
@@ -11,7 +12,7 @@ const getTotalStakedInUsd = async (
   oracle,
   oracleId,
   decimals = '1e18',
-  chainId = 56
+  chainId = FTM_CHAIN_ID
 ) => {
   const web3 = web3Factory(chainId);
 
@@ -22,7 +23,7 @@ const getTotalStakedInUsd = async (
   return totalStaked.times(tokenPrice).dividedBy(decimals);
 };
 
-const getTotalLpStakedInUsd = async (targetAddr, pool, chainId = 56) => {
+const getTotalLpStakedInUsd = async (targetAddr, pool, chainId = FTM_CHAIN_ID) => {
   const web3 = web3Factory(chainId);
 
   const tokenPairContract = new web3.eth.Contract(ERC20, pool.address);
