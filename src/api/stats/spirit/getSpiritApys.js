@@ -1,12 +1,12 @@
 const BigNumber = require('bignumber.js');
-const { bscWeb3: web3 } = require('../../../utils/web3');
+const { fantomWeb3: web3 } = require('../../../utils/web3');
 
 const SmartChef = require('../../../abis/SmartChef.json');
 const fetchPrice = require('../../../utils/fetchPrice');
 const { getTotalStakedInUsd } = require('../../../utils/getTotalStakedInUsd');
 const pools = require('../../../data/cakePools.json');
 const { compound } = require('../../../utils/compound');
-const { HOURLY_HPY, BSC_CHAIN_ID } = require('../../../constants');
+const { HOURLY_HPY, FTM_CHAIN_ID } = require('../../../constants');
 const getBlockNumber = require('../../../utils/getBlockNumber');
 
 const getCakeApys = async () => {
@@ -28,9 +28,9 @@ const getPoolApy = async pool => {
     getYearlyRewardsInUsd(pool.smartChef, pool.oracle, pool.oracleId, pool.decimals),
     getTotalStakedInUsd(
       pool.smartChef,
-      '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+      '0x9083EA3756BDE6Ee6f27a6e996806FBD37F6F093',
       'coingecko',
-      'pancakeswap-token'
+      'spiritswap-token'
     ),
   ]);
 
@@ -43,7 +43,7 @@ const getPoolApy = async pool => {
 const getYearlyRewardsInUsd = async (smartChefAddr, oracle, oracleId, decimals) => {
   const smartChefContract = new web3.eth.Contract(SmartChef, smartChefAddr);
 
-  const currentBlock = await getBlockNumber(BSC_CHAIN_ID);
+  const currentBlock = await getBlockNumber(FTM_CHAIN_ID);
   const bonusEndBlock = await smartChefContract.methods.bonusEndBlock().call();
   const isPoolRunning = currentBlock <= bonusEndBlock;
 
